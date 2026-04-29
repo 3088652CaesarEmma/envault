@@ -38,6 +38,12 @@ envault lock --file .env
 envault unlock --file .env
 ```
 
+**List all stored vaults:**
+
+```bash
+envault list
+```
+
 **Sync secrets to another project:**
 
 ```bash
