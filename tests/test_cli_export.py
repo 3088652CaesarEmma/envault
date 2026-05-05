@@ -75,3 +75,11 @@ class TestRenderVaultCommand:
         with patch("envault.cli_export.load_vault", return_value=SAMPLE_VAULT):
             result = runner.invoke(export_group, ["render", "myvault", "--format", "xml"])
         assert result.exit_code != 0
+
+    def test_all_secrets_present_in_dotenv_output(self, runner):
+        """Verify every secret key in the vault appears in dotenv output."""
+        with patch("envault.cli_export.load_vault", return_value=SAMPLE_VAULT):
+            result = runner.invoke(export_group, ["render", "myvault"])
+        assert result.exit_code == 0
+        for key, value in SAMPLE_VAULT["secrets"].items():
+            assert f"{key}={value}" in result.output
